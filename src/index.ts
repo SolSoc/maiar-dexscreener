@@ -45,7 +45,7 @@ const runtime = createRuntime({
       handler: mockExternalCall,
     }),
     new PluginExpress({
-      port: 3000,
+      port: 3002,
     }),
     new PluginTextGeneration(),
   ],
