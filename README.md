@@ -33,7 +33,7 @@ curl -X POST http://localhost:3000/message \
 "Socrates does not have a last name in historical records. He is simply known as Socrates, the classical Greek philosopher."%
 ```
 
-Output: "Socrates does not have a last name in historical records. He is simply known as Socrates, the classical Greek philosopher."%
+Output: `Socrates does not have a last name in historical records. He is simply known as Socrates, the classical Greek philosopher.`
 
 ### With the RAG plugin:
 
@@ -48,9 +48,11 @@ new PluginRag({
 }),
 ```
 
-Input: "What is the last name of Socrates"
+Input: `What is the last name of Socrates`
 
 Request Example:
+
+```
 curl -X POST http://localhost:3000/message \
  -H "Content-Type: application/json" \
  -d '{"message": "What is the last name of Socrates", "user": "test-user"}'
@@ -58,5 +60,4 @@ curl -X POST http://localhost:3000/message \
 
 ```
 
-Output: "The last name of Socrates in the EXTERNAL_SYSTEM is Potato."%
-```
+Output: `The last name of Socrates in the EXTERNAL_SYSTEM is Potato.`
