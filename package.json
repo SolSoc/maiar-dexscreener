@@ -1,0 +1,23 @@
+{
+  "name": "maiar-rag",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "prestart": "tsc",
+    "start": "node dist/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@maiar-ai/core": "^0.5.0",
+    "@maiar-ai/memory-sqlite": "^0.5.0",
+    "@maiar-ai/model-openai": "^0.5.0",
+    "@maiar-ai/plugin-express": "^0.5.0",
+    "@maiar-ai/plugin-terminal": "^0.5.0",
+    "@maiar-ai/plugin-text": "^0.5.0",
+    "dotenv": "^16.4.7",
+    "typescript": "^5.7.3"
+  }
+}
