@@ -20,35 +20,17 @@ pnpm start
 
 ## Examples:
 
-### Without the RAG plugin:
-
-Input: "What is the last name of Socrates"
-
-Request Example:
-
-```
-curl -X POST http://localhost:3000/message \
-  -H "Content-Type: application/json" \
-  -d '{"message": "What is the last name of Socrates", "user": "test-user"}'
-"Socrates does not have a last name in historical records. He is simply known as Socrates, the classical Greek philosopher."%
-```
-
-Output: `Socrates does not have a last name in historical records. He is simply known as Socrates, the classical Greek philosopher.`
-
-### With the RAG plugin:
-
 So we initialize the `runtime` with our new RAG plugin and provide it the following baseline information:
 
 ```
-new PluginRag({
-  name: "EXTERNAL_USER_SYSTEM",
-  description:
-    "Returns the full names of all users in the external system.",
-  handler: mockExternalCall,
-}),
+new PluginTrending({
+      name: "Dexscreener Boosted Tokens",
+      description: "Returns the list of the most boosted tokens on dexscreener",
+      fetchTrending: formatTrending,
+})
 ```
 
-Input: `What is the last name of Socrates`
+Input: `What are the most trending tokens on dex?`
 
 Request Example:
 
@@ -60,4 +42,4 @@ curl -X POST http://localhost:3000/message \
 
 ```
 
-Output: `The last name of Socrates in the EXTERNAL_SYSTEM is Potato.`
+Output: `"Here are some of the most trending tokens on the Solana DEX: 1. Farting Unicorn (FU) - 1500 total amount. 2. ai16cz - 1100 total amount. 3. The Smartest AI on Earth - 1000 total amount. 4. Vive la blockchain! - 1000 total amount. 5. Antishifty ($ANTY) - 600 total amount. These tokens are currently gaining attention and activity on the platform.`

@@ -5,7 +5,7 @@ const log = createLogger("plugin-trending");
 export class PluginTrending extends PluginBase {
   constructor(private config: DexscreenerPluginConfig) {
     super({
-      id: "plugin-rag",
+      id: "plugin-trending",
       name: "Dexscreener",
       description: "Handles retrieval of trending tokens on dexscreener",
     });

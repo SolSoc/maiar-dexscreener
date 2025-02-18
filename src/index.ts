@@ -19,6 +19,7 @@ import { OpenAIProvider } from "@maiar-ai/model-openai";
 
 import { PluginExpress } from "@maiar-ai/plugin-express";
 import { PluginTextGeneration } from "@maiar-ai/plugin-text";
+import messageRouter from "./app";
 import { PluginTrending } from "./plugin-dexscreener";
 
 interface TrendingDexscreenerToken {
@@ -78,6 +79,7 @@ const runtime = createRuntime({
     }),
     new PluginExpress({
       port: 3000,
+      router: messageRouter,
     }),
     new PluginTextGeneration(),
   ],
