@@ -1,4 +1,4 @@
-# maiar-rag
+# maiar-dexscreener
 
 The purpose of this repository is to illustrate a simple call to an external resource.
 In practice this is usually referred to a Retrieval Augmented Generation.
