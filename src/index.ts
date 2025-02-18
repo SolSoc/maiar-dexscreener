@@ -19,15 +19,48 @@ import { OpenAIProvider } from "@maiar-ai/model-openai";
 
 import { PluginExpress } from "@maiar-ai/plugin-express";
 import { PluginTextGeneration } from "@maiar-ai/plugin-text";
-import { PluginRag } from "./plugin-rag";
+import { PluginTrending } from "./plugin-dexscreener";
 
-async function mockExternalCall(): Promise<string> {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(["John Doe", "Jim Bean", "Socrates Potato"].join(","));
-    }, 1000);
-  });
+interface TrendingDexscreenerToken {
+  url: string;
+  chainId: string;
+  tokenAddress: string;
+  icon: string;
+  header: string;
+  openGraph: string;
+  description: string;
+  links: {
+    type: string;
+    url: string;
+  }[];
+  totalAmount: number;
 }
+
+async function mockExternalCall(): Promise<TrendingDexscreenerToken[]> {
+  const response = await fetch(
+    "https://api.dexscreener.com/token-boosts/top/v1",
+    {
+      method: "GET",
+      headers: {},
+    }
+  );
+  return (await response.json()) as TrendingDexscreenerToken[];
+}
+
+async function formatTrending(): Promise<string> {
+  const tokens = await mockExternalCall();
+  return tokens
+    .map(
+      (token) =>
+        `${token.description} - ${token.url} - ${token.totalAmount} total amount
+    
+      Chain ID: ${token.chainId}
+      Description: ${token.description}
+      `
+    )
+    .join("\n");
+}
+
 // Create and start the agent
 const runtime = createRuntime({
   model: new OpenAIProvider({
@@ -38,11 +71,10 @@ const runtime = createRuntime({
     dbPath: path.join(process.cwd(), "data", "conversations.db"),
   }),
   plugins: [
-    new PluginRag({
-      name: "EXTERNAL_USER_SYSTEM",
-      description:
-        "Returns the full names of all users in the external system.",
-      handler: mockExternalCall,
+    new PluginTrending({
+      name: "Dexscreener Boosted Tokens",
+      description: "Returns the list of the most boosted tokens on dexscreener",
+      fetchTrending: formatTrending,
     }),
     new PluginExpress({
       port: 3000,
